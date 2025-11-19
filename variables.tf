@@ -1,18 +1,15 @@
 variable "ibmcloud_api_key" {
   type      = string
   default   = ""
-  sensitive = true
 }
 
 variable "iaas_classic_username" {
   type      = string
-  sensitive = false
 }
 
 variable "iaas_classic_api_key" {
   type      = string
   default   = ""
-  sensitive = true
 }
 
 variable "project" {

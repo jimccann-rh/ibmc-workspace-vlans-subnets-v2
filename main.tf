@@ -1,10 +1,5 @@
-terraform {
-  required_providers = {
-    ibm = ">= 1.12.0"
-  }
-}
-
 provider "ibm" {
+  version               = "~> 1.38"
   iaas_classic_username = var.iaas_classic_username
   iaas_classic_api_key  = var.iaas_classic_api_key
 }
