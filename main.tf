@@ -12,10 +12,14 @@ provider "ibm" {
   iaas_classic_api_key  = var.iaas_classic_api_key
 }
 
+locals {
+  vlan_name_max_length = 20
+}
+
 resource "ibm_network_vlan" "vlans" {
   count = var.vlan_quantity
 
-  name            = "${var.project}_vlan_connect_${var.vlan_offset_name}${count.index}"
+  name            = "${substr(format("%s_vc_%s", var.project, var.vlan_offset_name), 0, max(0, local.vlan_name_max_length - length(tostring(count.index))))}${count.index}"
   datacenter      = var.datacenter
   router_hostname = var.router
   type            = "PRIVATE"
@@ -54,7 +58,7 @@ resource "ibm_subnet" "portable_subnet" {
 resource "ibm_network_vlan" "vlans_disconnected" {
   count = var.vlan_quantity_disconnected
 
-  name            = "${var.project}_vlan_disconnect_${count.index}"
+  name            = "${substr(format("%s_vd", var.project), 0, max(0, local.vlan_name_max_length - length(tostring(count.index))))}${count.index}"
   datacenter      = var.datacenter
   router_hostname = var.router
   type            = "PRIVATE"
